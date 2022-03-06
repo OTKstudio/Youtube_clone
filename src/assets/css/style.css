@@ -1,0 +1,678 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+background-color: rgb(42, 45, 46);
+font-family: Arial, Helvetica, sans-serif;
+padding-left: 15px;padding-top: 15px;
+position: relative;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+.login_link{
+    color: steelblue;
+}
+header{
+    width: 100%; 
+    padding-right: 20px;
+}
+.ytb_navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ytb_logo{
+    display: flex;
+    align-items: center;
+}
+.ytb_logo i{
+    color: rgb(240, 238, 238);
+    margin-right: 15px;
+    font-size: 30px;
+}
+.ytb_logo img{
+    width: 50px; height: 50px;
+    margin-right: 8px;
+}
+.ytb_logo h1{
+    color: white;
+    font-size: 22px;
+    text-transform: uppercase;
+    font-weight: 550;
+}
+.search{
+    position: relative;
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    justify-content: space-between;
+    width: 30%; height: 35px;
+    background-color: white;
+    transition: 0.5s;
+}
+.search input{
+    border: none;
+    outline: none;
+    width: 100%;
+}
+.nav_micro{
+    display: flex;align-items: center;justify-content: center;text-align: center;
+    margin-left: -75px;
+    background-color: white;
+    border-radius: 50%;
+    width: 35px;height: 35px;
+    cursor: pointer;
+}
+.nav_micro:hover{
+    background-color: teal;
+}
+.nav_micro img{
+    width: 25px;
+    translate: -50%;
+}
+.user_profil{
+    position: relative;
+}
+.user_profil .profile{
+ position: relative;
+ width: 50px;height: 50px;
+ border-radius: 50%;
+ overflow: hidden;
+ cursor: pointer;
+}
+.user_profil .profile img{
+    position: absolute;
+    top: 0;left: 0;
+    width: 100%;height: 100%;
+    object-fit: cover;
+}
+
+.user_profil .menu{
+ background-color: white;
+ color: rgb(17, 17, 17);
+ position: absolute;
+ top: 68px;
+ right: -11px;
+ padding: 10px 20px;
+ width: 200px;
+ border-radius: 5px;
+ transition: 1s;
+ display: none;
+ z-index: 10000;
+}
+.user_profil .menu.active{
+    display: block;
+}
+.user_profil .menu::before{
+    content: '';
+    position: absolute;
+    top: -7px;
+    right: 28px;
+    width: 20px;height: 20px;
+    background: white;
+    transform: rotate(45deg);
+   }
+.user_profil .menu h1{
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500px;
+    margin-bottom: 15px;
+}
+.user_profil .menu h1 span{
+    color: #555;
+    font-size: 12px;
+    letter-spacing: .3px;
+    font-weight: 400px;
+}
+.user_profil .menu ul li{
+   list-style: none;
+   display: flex;
+   margin-bottom: 12.5px;
+   align-items: center;
+
+}
+.user_profil .menu ul li img{
+    max-width: 20px;
+    opacity: 50%;
+    margin-right: 10px;
+ }
+ .user_profil .menu ul li a{
+    color: #555;
+    font-weight: 500;
+    transition: .5s;
+ }
+ .user_profil .menu ul li:hover a{
+    color: red;
+    font-weight: 500;
+    transition: .5s;
+ }
+.user_notif{
+    width: 27.5px;
+    height: 27.5px;
+    position: relative;
+    background-size: cover;
+    background-image: url('../css/bootstrap_icons/bell-fill-white.svg') ;
+    
+}
+.user_notif-buble{
+    margin-top: -5px;margin-left: 10px;
+    background-color: red;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13.5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+.icon i{
+    font-size: 20px;
+}
+.nav_task i{
+    margin-right: 15px;
+    color: white;
+    font-size: 37px;
+    cursor: pointer;
+}
+.nav_user{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+.nav_user:hover{
+    background-color: teal;
+    color: white;
+}
+.nav_user i{
+    font-size: 30px;
+    margin-right: 8px;
+}
+.nav_user p{
+    font-size: 17px;
+}
+.ytb_body{
+    margin-top: 5px;
+    display: flex;
+    width: 100%;
+}
+
+/* 
+Affichage du menu de navigation
+*/
+
+.ytb_expl{
+overflow-x: hidden;
+overflow-y: hidden;
+margin-top: 11.5px;
+width: 18%;
+height: 100vh;
+
+}
+.ytb_expl:hover{
+    overflow-y: scroll;
+}
+.ytb_expl::-webkit-scrollbar {
+    width: 7px;
+    height: 8px;
+    background-color: rgb(59, 58, 58); /* or add it to the track */
+  }
+.expl_item{
+    padding-left: 15px;
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 3.5px;
+    display: flex;
+    align-items: center;
+}
+.expl_item:hover{
+    background-color: rgb(82, 78, 78); 
+}
+.expl_item img{
+    margin-right: 22px;
+}
+.expl_item img path{
+    fill:white;
+}
+.expl_item p{
+    font-size: 17px;
+    letter-spacing: .5px;
+    color: rgb(228, 222, 222);
+}
+.expl_container .active{
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
+    background-color: white;
+}
+.expl_container .active p{
+    color: black;
+}
+hr.dashed{
+    margin-bottom: 10px;
+    border-top: .2px  #bbb;
+}
+.expl_user p{
+    color: rgb(204, 199, 199);
+    margin-bottom: 13px;
+    line-height: 20px;
+}
+.expl_user button{
+    cursor: pointer;
+    font-size: 15px;
+    color: rgb(39, 39, 41);
+    padding: 4px;
+    margin-bottom: 13px;
+    border-radius: 5px;
+    border: none;
+}
+.expl_tops p {
+    color: rgb(212, 208, 208);
+    font-size: 15px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.expl_top{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 6px;
+}
+.expl_top .icon{
+    position: relative;
+    width: 25px;height: 25px;
+    margin-right: 25px;
+    background-color: whitesmoke;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;justify-content: center;
+}
+.expl_top p {
+    margin-top: 5px;
+    color: white;
+    align-items: center;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+.expl_chanel{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    color: rgb(247, 242, 242);
+}
+.expl_chanel i{
+    margin-right: 25px;
+    font-size: 25px;
+}
+.expl_tools span{
+    color: rgb(247, 242, 242);
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+.expl_footer{
+    font-size: 12px;
+    color: rgb(192, 188, 188);
+}
+
+/* 
+Affichage des syllabus et informations
+*/
+
+.ytb_content{
+    width: 90%;
+    margin-top: 8px;
+    background-color: rgb(24, 24, 24);
+}
+.ytb_tag{
+  border-top: 1px solid white;
+  background-color: rgb(42, 45, 46);
+  padding-left: 25px;padding-right: 20px;
+  padding-top: 12px;padding-bottom: 12px;
+  border-bottom: 1px solid white;  
+}
+.sub_menu{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sub_menu i{
+    font-size: 30px;
+    color: whitesmoke;
+}
+.sub_menu-item{
+display: flex;
+}
+.sub_menu-item p {
+    background-color: rgb(95, 93, 93);
+    font-size: 15px;
+    padding: 4.3px;
+    border-radius: 5px;
+    margin-right: 20px;
+    letter-spacing: 1px;
+}
+.sub_menu-item p a{
+    color: white;
+    text-decoration: none;
+}
+.lst_container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.list_video{
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.lst_item{
+    width: 250px;
+    height: 265px;
+    margin-right: 5px;
+    margin-bottom: 20px;
+    position: relative;
+    cursor: pointer;
+}
+.lst_item:hover{
+    transform: scale(1.02);
+}
+.list-img{
+    width: 250px;
+    height: 155px;
+}
+.list-img img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+.lst_item-title{
+    width: 100%;
+    margin-bottom: 13.5px;
+    display: flex;
+    margin-top: 10px;
+    margin-left: 2.5px;
+    align-items: center;
+}
+.lst_item-title img{
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+}
+.item-title{
+    width: 202.5px;
+    max-height: 41px;
+    overflow: hidden;
+}
+.item-title h1{
+    letter-spacing: .5px;
+    word-wrap: break-word;
+    text-transform: capitalize;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16.5px;
+    font-weight: 500;
+    color: whitesmoke;
+}
+.lst_channel{
+    font-size: 14px;
+    margin-left: 2px;
+    padding: 2.5px;
+    color: rgb(194, 190, 190);
+
+
+}
+.lst_item-info p{
+    margin-left: 2.5px;
+    font-size: 15px;
+    margin-top: 2px;
+    color: rgb(129, 127, 127);
+}
+.lst-time{
+    position: absolute;
+    top: 51.5%;
+    right: 2%;
+    padding: 0px;
+    color: white;
+    background-color: black;
+}
+
+/* transition */
+.transition{
+    display: flex;
+    color: whitesmoke;
+    height: 50vh;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+}
+.transition h1{
+font-size: 28px;
+margin-bottom: 25px;
+}
+.transition button{
+    padding: 8px;
+    color: white;
+    border: none;
+    font-size: 18px;
+    background-color: red;
+    border-radius: 5px;
+}
+
+/* STYLE CSS : Historique */
+.history_containner{
+    width: 100%;
+    padding-left: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.history_list{
+    padding-top: 20px;
+    overflow-x: hidden;
+    width: 65%;
+}
+.history_list h1{
+    color: white;
+    font-size: 19px;
+    font-weight: 500;
+}
+.list-items{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.list-item{
+    width: 100%;
+    word-wrap: break-word;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 20px;
+}
+.list-img-his{
+    width: 180px;
+    overflow: hidden;
+    height: 105px;
+    margin-right: 20px;
+}
+.list-img-his img{
+    width: 100%;
+    height: 100%;
+}
+.list-info{
+    color: rgb(146, 143, 143);
+}
+.list-info h1{
+    color: white;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+.list-info p{
+    margin-bottom: 10px;
+}
+.history_param{
+    height: 100vh;
+    padding-top: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color: black;
+    width: 35%;
+    color: white;
+}
+.history_param h1{
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.param-search{
+    display: flex;
+    align-items: center;
+    width: 250px;
+    border-bottom: 1px solid white;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+.param-search input{
+    background-color: transparent;
+    margin-left: 20px;
+    font-size: 18px;
+    border: none;
+    outline: none;
+}
+.param-search i{
+    font-size: 30px;
+}
+.param-tools{
+    color: rgb(150, 147, 147);
+}
+.param-tools p{
+    text-transform: uppercase;
+    font-size: 17px;
+    margin-top: 35px;
+    cursor: pointer;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.param-tools p:hover{
+background-color: rgb(43, 41, 41);
+}
+
+/* register */
+.user-register{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.register{
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 15px;
+    margin-top: -65px;
+    background-color: white;
+}
+.or{
+    font-size: 15px !important;
+    color: rgb(104, 101, 101);
+    margin-top: 15px;
+    font-weight: 600;
+}
+.or::before{
+    content: '';
+    background-color: #d1cccc;
+    display: block;
+    width: 90px;
+    height: 2px;
+    position: relative;
+    top: 11px;
+}
+.or::after{
+    content: '';
+    background-color: #d1cccc;
+    width: 90px;
+    display: block;
+    height: 2px;
+    position: relative;
+    bottom: 10px;
+    left: 145px; 
+}
+.register .gooleauth{
+    align-items: center;
+    text-align: center;
+}
+.register .gooleauth p{
+    margin-bottom: 25px;
+}
+.register .gooleauth .logo img{
+    width: 70px;
+}
+.register .gooleauth .logo h1{
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+.register .gooleauth .logo {
+    margin-bottom: 15px;
+}
+.authsubmit{
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 5px;
+    background-color: blue;
+}
+.authsubmit h1{
+    font-weight: 500;
+    font-size: 16px;
+}
+.authsubmit img{
+    width: 45px;
+}
+.authsubmit:hover{
+    background-color: red;
+}
+.register .form_control{
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.register .form_control input{
+    border: none;
+    outline: none;
+    width: 400px;
+    padding: 10px;
+    border: 1px solid rgb(190, 187, 187);
+    margin-bottom: 25px;
+}
+.register .form_control button{
+    border: none;
+    outline: none;
+    background-color: blue;
+    color: white;
+    padding: 8px;
+    font-size: 18px;
+    letter-spacing: .5px;
+    width: 80%;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.register .form_control button:hover{
+    background-color: red;
+}
