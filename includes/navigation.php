@@ -1,9 +1,11 @@
 <section class="ytb_expl">
   <div class="expl_container">
+    <a href="index.php">
     <div class="expl_item active">
       <img src="./src/assets/css/bootstrap_icons/house-fill.svg"  width="25" height="25">
       <p>Acceuil</p>
     </div>
+    </a>
     <div class="expl_item">
       <img src="./src/assets/css/bootstrap_icons/globe2.svg"  width="25" height="25">
       <p>Explorer</p>
@@ -17,10 +19,12 @@
       <img src="./src/assets/css/bootstrap_icons/grid-3x3-gap.svg"  width="25" height="25">
       <p>Bibliotheque</p>
     </div>
+    <a href="history">
     <div class="expl_item">
       <img src="./src/assets/css/bootstrap_icons/clock-history.svg"  width="25" height="25">
       <p>Historique</p>
     </div>
+    </a>
     <hr class="dashed">
     <div class="expl_user">
       <p>Connectez-vous à YouTube pour cliquer sur "J'aime", ajouter un commentaire et vous abonner.</p>

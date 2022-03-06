@@ -1,7 +1,7 @@
 <?php 
     $count = 0;
     $this->_videoManager = new VideoManager;
-    $videos = $this->_videoManager->getVideobyId('history', 'username', 'brecht', 'Video');
+    $videos = $this->_videoManager->getVideobyId('history', 'username', $userid, 'Video');
 ?>
 <section class="history_containner">
     <div class="history_list">

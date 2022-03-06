@@ -1,6 +1,9 @@
  .watch_content{
-    width: 100%;
-    margin-top: 8px;
+    position: absolute;
+    width: 78.5%;
+    left: 20%;
+    margin-top: 40px;
+    padding-right: 20px;
     background-color: rgb(24, 24, 24);
  }
 

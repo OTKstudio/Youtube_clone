@@ -1,10 +1,13 @@
-
+<?php
+session_start();
+?>
 <?php
 
 use Google\Service\AIPlatformNotebooks\Location;
 
-session_start();
-   $_SESSION['username'] = ''; $_SESSION['email']  = '' ;   $_SESSION['profilpic'] = ''  ;
+
+  //  $_SESSION['username'] = '';
+   $_SESSION['email']  = '' ;   $_SESSION['profilpic'] = ''  ;
     $userid = ''; $usermail = ''; $userpic= ''; $statut = 'abonne'; $notif = ''; $msg='';
     $videoManager = new VideoManager;
     $count = 0;
@@ -18,21 +21,7 @@ session_start();
         $data= $gauth->userinfo->get();
           $users = $videoManager->getUser();
           $verifyUserTab = count($users);
- 
-            $fichier = dirname(__DIR__) . DIRECTORY_SEPARATOR. 'cookies' . DIRECTORY_SEPARATOR. 'user_cookie';
-            $userData = $data->name;
-            if(file_exists($fichier)){
-              $userData = (string)file_get_contents($fichier);
-            }
-            file_put_contents($fichier, $userData);
-
-            $fichier = dirname(__DIR__) . DIRECTORY_SEPARATOR. 'cookies' . DIRECTORY_SEPARATOR. $data->name;
-            $userData = $data->name;
-            if(file_exists($fichier)){
-              $userData = (string)file_get_contents($fichier);
-            }
-            file_put_contents($fichier, $userData);
-
+          $_SESSION['username'] = $data->name;
           if($verifyUserTab>0){
             foreach($users as $video):
               if($video->userName() == $data->name){
@@ -54,31 +43,35 @@ session_start();
       $google_client->createAuthUrl();
     }
 
-  function cookieInfo(){
-    $fichier = dirname(__DIR__) . DIRECTORY_SEPARATOR. 'cookies' . DIRECTORY_SEPARATOR. 'user_cookie';
-    return file_get_contents($fichier);
-  }
-  $cookieval= cookieInfo();
 
-  $userFile = dirname(__DIR__) . DIRECTORY_SEPARATOR. 'cookies' . DIRECTORY_SEPARATOR. $cookieval;
-  if(!file_exists($userFile)){
-  }else{
-    $userCookieVal=  file_get_contents($userFile);
-  }
-  // echo $userCookieVal;
-    $users = $videoManager->getVideobyId('user', 'username', $userCookieVal, 'Video');;
-    foreach($users as $video){
-      $_SESSION['username'] = $video->userName() ;
-      $_SESSION['email'] = $video->userMail() ;
-      $_SESSION['profilpic'] = $video->userPic();
+   if(!empty($_SESSION['username'])){    
+      $users = $videoManager->getVideobyId('user', 'username', $_SESSION['username'], 'Video');;
+      foreach($users as $video){
+        $_SESSION['username'] = $video->userName() ;
+        $_SESSION['email'] = $video->userMail() ;
+        $_SESSION['profilpic'] = $video->userPic();
+      }
+      setcookie(
+        'LOGGED_USER',
+        $_SESSION['username'],
+        [
+            'expires' => time() + 365*24*3600,
+            'secure' => true,
+            'httponly' => true,
+        ]
+      );
+      $userid = $_SESSION['username'] ;
+      $usermail = $_SESSION['email'] ;
+      $userpic = $_SESSION['profilpic'];
     }
-
-    $userid = $_SESSION['username'] ;
-    $usermail = $_SESSION['email'] ;
-    $userpic = $_SESSION['profilpic'];
-
-
-     
+    if(!empty($_COOKIE['LOGGED_USER'])){
+      $users = $videoManager->getVideobyId('user', 'username', $_COOKIE['LOGGED_USER'], 'Video');;
+      foreach($users as $video){
+        $userid =  $video->userName() ;
+        $usermail = $video->userMail() ;
+        $userpic = $video->userPic();
+      }
+    }
     // Recupere l ID de la video youtube
     if(!empty($userid)){
         $notif_count = $videoManager->getVideobyId('notifications', 'userid', $userid, 'Video');
@@ -144,12 +137,13 @@ session_start();
     <div class="nav_task">
       <i class="las la-sliders-h"></i>
       <i class="las la-braille"></i>
+      <i class="las la-edit"></i>
     </div>
     <?php if(!empty($userid)){
       ?>
       <div class="user_profil">
          <div class="profile" onclick="profileMenuToggle();">
-           <img src="https://lh3.googleusercontent.com/a/AATXAJwqCbZnW78qhiMSPAXY6gf0TYjcTh7wgBrQ8NUA=s96-c" alt="">
+           <img src="<?= $userpic?>" alt="">
          </div>
          <div class="menu">
            <h1><?= $userid ?>
@@ -168,6 +162,7 @@ session_start();
       <i class="lar la-user-circle"></i>
       <p>Se connecter</p>
     </div>
+    
     <?php } ?>
   </nav>
 </header>
