@@ -17,7 +17,7 @@
     }
     public function getUser(){
         $this->getBdd();
-        return $this->getAll('users', 'Video');
+        return $this->getAll('user', 'Video');
     }
      public function getVideobyId($table, $colum, $id, $obj){
         $this->getBdd();
@@ -48,7 +48,7 @@
     }
     public function postUser($tab){
         $this->getBdd();
-        return $this->postUserinfo('users', $tab);
+        return $this->postUserinfo('user', $tab);
     }
 
     // Methode DEL pour supprimer les informations dans la BD

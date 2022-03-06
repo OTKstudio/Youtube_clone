@@ -11,6 +11,7 @@ class Video{
     private $_channeltitle;
     private $_username;
     private $_usermail;
+    private $_userpicture;
     private $_date;
     public function __construct(array $data){
       $this->hydrate($data);
@@ -81,6 +82,11 @@ class Video{
             $this->_usermail = $usermail;
         }
     }
+    public function setuserPicture($userpicture){
+        if(is_string($userpicture)){
+            $this->_userpicture = $userpicture;
+        }
+    }
     public function setdate($date){
             $this->_date = $date;
     }
@@ -117,6 +123,9 @@ class Video{
     }
     public function userMail(){
         return $this->_usermail;
+    }
+    public function userPic(){
+        return $this->_userpicture;
     }
     public function date(){
         return $this->_date;

@@ -1,5 +1,5 @@
 <?php 
-    $userid = 'brecht';
+
     $statut = 'abonne';
     $notif = '';
     $msg='';

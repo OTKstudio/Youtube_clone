@@ -1,14 +1,12 @@
 
-<?php 
-   session_start();
-   $videoManager = new VideoManager;
-    $userid = '';
-    $usermail = '';
-    $userpic= '';
-    $statut = 'abonne';
-    $notif = '';
-    $msg='';
-    $_SESSION['profil_pic']='';
+<?php
+
+use Google\Service\AIPlatformNotebooks\Location;
+
+session_start();
+   $_SESSION['username'] = ''; $_SESSION['email']  = '' ;   $_SESSION['profilpic'] = ''  ;
+    $userid = ''; $usermail = ''; $userpic= ''; $statut = 'abonne'; $notif = ''; $msg='';
+    $videoManager = new VideoManager;
     $count = 0;
       // Connexion with Google
     include('./googleAuth.php');
@@ -18,37 +16,67 @@
         // Recupere information du Pofil Utilisateur
         $gauth = new Google_Service_Oauth2($google_client);
         $data= $gauth->userinfo->get();
-          $GU_name = $data->name;  
-          $_SESSION['username'] = $data->name;
-          $_SESSION['email']  = $data['email']; ;  
-          $_SESSION['profilpic'] = $data['picture'];  
+          $users = $videoManager->getUser();
+          $verifyUserTab = count($users);
+ 
+            $fichier = dirname(__DIR__) . DIRECTORY_SEPARATOR. 'cookies' . DIRECTORY_SEPARATOR. 'user_cookie';
+            $userData = $data->name;
+            if(file_exists($fichier)){
+              $userData = (string)file_get_contents($fichier);
+            }
+            file_put_contents($fichier, $userData);
+
+            $fichier = dirname(__DIR__) . DIRECTORY_SEPARATOR. 'cookies' . DIRECTORY_SEPARATOR. $data->name;
+            $userData = $data->name;
+            if(file_exists($fichier)){
+              $userData = (string)file_get_contents($fichier);
+            }
+            file_put_contents($fichier, $userData);
+
+          if($verifyUserTab>0){
+            foreach($users as $video):
+              if($video->userName() == $data->name){
+                  echo"";
+              }else{
+                  $tab['name'] = $data->name;
+                  $tab['mail'] = $data['email']; 
+                  $tab['pic'] = $data['picture']; 
+                  $videoManager->postUser($tab);
+              }
+           endforeach;
+          }else{
+            $tab['name'] = $data->name;
+            $tab['mail'] = $data['email']; 
+            $tab['pic'] = $data['picture']; 
+            $videoManager->postUser($tab);
+          }
     }else{
       $google_client->createAuthUrl();
+    }
+
+  function cookieInfo(){
+    $fichier = dirname(__DIR__) . DIRECTORY_SEPARATOR. 'cookies' . DIRECTORY_SEPARATOR. 'user_cookie';
+    return file_get_contents($fichier);
+  }
+  $cookieval= cookieInfo();
+
+  $userFile = dirname(__DIR__) . DIRECTORY_SEPARATOR. 'cookies' . DIRECTORY_SEPARATOR. $cookieval;
+  if(!file_exists($userFile)){
+  }else{
+    $userCookieVal=  file_get_contents($userFile);
+  }
+  // echo $userCookieVal;
+    $users = $videoManager->getVideobyId('user', 'username', $userCookieVal, 'Video');;
+    foreach($users as $video){
+      $_SESSION['username'] = $video->userName() ;
+      $_SESSION['email'] = $video->userMail() ;
+      $_SESSION['profilpic'] = $video->userPic();
     }
 
     $userid = $_SESSION['username'] ;
     $usermail = $_SESSION['email'] ;
     $userpic = $_SESSION['profilpic'];
-    $users = $videoManager->getUser();
 
-    $verifyUserTab = count($users);
-    if($verifyUserTab>0){
-      foreach($users as $video):
-        if($video->userName() == $userid){
-            echo"";
-        }else{
-            $tab['name'] = $userid;
-            $tab['mail'] = $usermail;
-            $tab['pic'] = $userpic;
-            $videoManager->postUser($tab);
-        }
-     endforeach;
-    }else{
-      $tab['name'] = $_SESSION['username'];
-      $tab['mail'] = $_SESSION['email'];
-      $tab['pic'] = $_SESSION['profilpic'];
-      $videoManager->postUser($tab);
-    }
 
      
     // Recupere l ID de la video youtube
@@ -60,7 +88,16 @@
     }else{
       
     }
-
+    if(isset($_GET['logout'])){
+      function logout($file){
+        session_destroy();
+        $file_pointer = "gfg.txt"; 
+        $userFile = dirname(__DIR__) . DIRECTORY_SEPARATOR. 'cookies' . DIRECTORY_SEPARATOR. $file;
+       // Use unlink() function to delete a file 
+       unlink($userFile);
+      }
+      header('location:index.php');
+    }
 
 ?>
 
@@ -122,7 +159,7 @@
              <li><img src="./src/assets/css/bootstrap_icons/person-circle.svg" alt=""><a href="">Profil</a></li>
              <li><img src="./src/assets/css/bootstrap_icons/question-circle.svg" alt=""><a href="">Aide</a></li>
              <li><img src="./src/assets/css/bootstrap_icons/gear.svg" alt=""><a href="">Parametre</a></li>
-             <li><img src="./src/assets/css/bootstrap_icons/door-open.svg" alt=""><a href="">Se deconnecter</a></li>
+             <li><img src="./src/assets/css/bootstrap_icons/door-open.svg" alt=""><a href="logout&user=<?= $userid ?>">Se deconnecter</a></li>
            </ul>
          </div>
       </div>
