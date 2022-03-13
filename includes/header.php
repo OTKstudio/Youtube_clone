@@ -3,95 +3,26 @@ session_start();
 ?>
 <?php
 
-use Google\Service\AIPlatformNotebooks\Location;
+  //Fonctionnbr_vue qui nous permet d'avoir une precision sur le nombre de
+  include('./src/functions/nbr_vue.php');
+   
+  //Fonction time_elapsed qui nous permet d'avoir une precision de temps
+  include('./src/functions/time_elapsed.php');
 
+  //Fonction check qui verifie la connexion internet grace a @fopen
+  include('./src/functions/check_connection.php');
 
-  //  $_SESSION['username'] = '';
-   $_SESSION['email']  = '' ;   $_SESSION['profilpic'] = ''  ;
-    $userid = ''; $usermail = ''; $userpic= ''; $statut = 'abonne'; $notif = ''; $msg='';
-    $videoManager = new VideoManager;
-    $count = 0;
-      // Connexion with Google
-    include('./googleAuth.php');
-    if(isset($_GET['code'])){
-        $token = $google_client->fetchAccessTokenWithAuthCode($_GET['code']);
-        $google_client->setAccessToken($token);
-        // Recupere information du Pofil Utilisateur
-        $gauth = new Google_Service_Oauth2($google_client);
-        $data= $gauth->userinfo->get();
-          $users = $videoManager->getUser();
-          $verifyUserTab = count($users);
-          $_SESSION['username'] = $data->name;
-          if($verifyUserTab>0){
-            foreach($users as $video):
-              if($video->userName() == $data->name){
-                  echo"";
-              }else{
-                  $tab['name'] = $data->name;
-                  $tab['mail'] = $data['email']; 
-                  $tab['pic'] = $data['picture']; 
-                  $videoManager->postUser($tab);
-              }
-           endforeach;
-          }else{
-            $tab['name'] = $data->name;
-            $tab['mail'] = $data['email']; 
-            $tab['pic'] = $data['picture']; 
-            $videoManager->postUser($tab);
-          }
-    }else{
-      $google_client->createAuthUrl();
-    }
+  // Google authentification lors du register ou login
+  include('./src/functions/google_login.php');
 
+  //  Creation de cookie et de session utilisateur
+    include('./src/functions/cookie_creation.php');
 
-   if(!empty($_SESSION['username'])){    
-      $users = $videoManager->getVideobyId('user', 'username', $_SESSION['username'], 'Video');;
-      foreach($users as $video){
-        $_SESSION['username'] = $video->userName() ;
-        $_SESSION['email'] = $video->userMail() ;
-        $_SESSION['profilpic'] = $video->userPic();
-      }
-      setcookie(
-        'LOGGED_USER',
-        $_SESSION['username'],
-        [
-            'expires' => time() + 365*24*3600,
-            'secure' => true,
-            'httponly' => true,
-        ]
-      );
-      $userid = $_SESSION['username'] ;
-      $usermail = $_SESSION['email'] ;
-      $userpic = $_SESSION['profilpic'];
-    }
-    if(!empty($_COOKIE['LOGGED_USER'])){
-      $users = $videoManager->getVideobyId('user', 'username', $_COOKIE['LOGGED_USER'], 'Video');;
-      foreach($users as $video){
-        $userid =  $video->userName() ;
-        $usermail = $video->userMail() ;
-        $userpic = $video->userPic();
-      }
-    }
-    // Recupere l ID de la video youtube
-    if(!empty($userid)){
-        $notif_count = $videoManager->getVideobyId('notifications', 'userid', $userid, 'Video');
-        foreach($notif_count as $video){
-          $count += $video->videoAdd();
-        }
-    }else{
-      
-    }
-    if(isset($_GET['logout'])){
-      function logout($file){
-        session_destroy();
-        $file_pointer = "gfg.txt"; 
-        $userFile = dirname(__DIR__) . DIRECTORY_SEPARATOR. 'cookies' . DIRECTORY_SEPARATOR. $file;
-       // Use unlink() function to delete a file 
-       unlink($userFile);
-      }
-      header('location:index.php');
-    }
+  // Fonction pour afficher le nombre de notifications de l'utilisateur
+  include('./src/functions/notif_count.php');
 
+  // fonction Logout pour la deconnexion
+  include('./src/functions/logout.php');
 ?>
 
 <!doctype html>
@@ -113,7 +44,7 @@ use Google\Service\AIPlatformNotebooks\Location;
     <div class="ytb_logo">
       <i class="las la-align-justify"></i>
       <img src="./src/assets/img/youtube_small.png" alt="">
-      <h1>Youtube</h1>
+      <h1>Youtube </h1>
     </div>
     <div class="search">
       <div class="input">

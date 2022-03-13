@@ -1,3 +1,10 @@
+<?php 
+ 
+    $count = 0;
+    $videoManager = new VideoManager;
+    $navUserChnl = $videoManager->getVideobyId('abonnement', 'userid', $userid, 'Video');
+
+?>
 <section class="ytb_expl">
   <div class="expl_container">
     <a href="index.php">
@@ -26,10 +33,22 @@
     </div>
     </a>
     <hr class="dashed">
-    <div class="expl_user">
-      <p>Connectez-vous à YouTube pour cliquer sur "J'aime", ajouter un commentaire et vous abonner.</p>
-      <button>Se connecter</button>
-    </div>
+    <p class="abonne_txt">Abonnement</p>
+    <?php if(!empty($userid)){
+      foreach($navUserChnl as $userChnl){
+      ?>
+      <a href="channel&cid=<?= $userChnl->ChannelId() ?>">
+      <div class="expl_item userchannel">
+        <img src="./src/assets/css/bootstrap_icons/person-circle-white.svg"  width="25" height="25">
+        <p><?= $userChnl->channelTitle() ?></p>
+      </div>
+      </a>
+      <?php } }else{ ?>
+        <div class="expl_user">
+        <p>Connectez-vous à YouTube pour cliquer sur "J'aime", ajouter un commentaire et vous abonner.</p>
+        <button>Se connecter</button>
+      </div>
+    <?php } ?>
     <hr class="dashed">
     <div class="expl_tops">
       <p>le meilleur de youtube</p>

@@ -38,6 +38,17 @@ abstract class Model{
         $req->closeCursor(); 
     }
 
+    protected function getbydoubleId($table, $colum1, $id1, $colum2, $id2, $obj){
+        $var = [];
+        $req = self::$_bdd->prepare("SELECT * FROM ".$table." WHERE ".$colum1." = '$id1' AND ".$colum2." = '$id2' ");
+        $req->execute();
+        while($data = $req->fetch(PDO::FETCH_ASSOC)){
+            $var[] = new $obj($data);
+        }
+        return $var;
+        $req->closeCursor(); 
+    }
+
     
     // INSERT INTO method
     protected function postAll($table, $obj){
@@ -103,6 +114,18 @@ abstract class Model{
         $stmt->bindParam(":name", $obj['name']);
         $stmt->bindParam(":mail", $obj['mail']);
         $stmt->bindParam(":pic", $obj['pic']);
+        $stmt->execute();
+    }
+    
+    protected function postAvis($table, $obj){
+        $req = 'INSERT INTO '.$table.' (`channeltitle`, `videoid`, `videotitle`,`username`, `likecount`) 
+        VALUES (:ctitle,  :vid, :vtitle,:username, :likecount)';
+        $stmt = self::$_bdd->prepare($req);
+        $stmt->bindParam(":ctitle", $obj['ctitle']);
+        $stmt->bindParam(":vid", $obj['vid']);
+        $stmt->bindParam(":vtitle", $obj['vtitle']);
+        $stmt->bindParam(":username", $obj['username']);
+        $stmt->bindParam(":likecount", $obj['likecount']);
         $stmt->execute();
     }
     // DELETE methode

@@ -11,7 +11,11 @@ class Video{
     private $_channeltitle;
     private $_username;
     private $_usermail;
+    private $_likecount;
+    private $_dislikecount;
     private $_userpicture;
+    private $_vuecount;
+    private $_abonnecount;
     private $_date;
     public function __construct(array $data){
       $this->hydrate($data);
@@ -87,6 +91,30 @@ class Video{
             $this->_userpicture = $userpicture;
         }
     }
+    public function setlikeCount($likecount){
+        $likecount = (int) $likecount;
+        if($likecount > 0){
+            $this->_likecount = $likecount;
+        }
+    }
+    public function setdislikeCount($dislikecount){
+        $dislikecount = (int) $dislikecount;
+        if($dislikecount > 0){
+            $this->_dislikecount = $dislikecount;
+        }
+    }
+    public function setvueCount($vuecount){
+        $vuecount = (int) $vuecount;
+        if($vuecount > 0){
+            $this->_vuecount = $vuecount;
+        }
+    }
+    public function setabonneCount($abonnecount){
+        $abonnecount = (int) $abonnecount;
+        if($abonnecount > 0){
+            $this->_abonnecount = $abonnecount;
+        }
+    }
     public function setdate($date){
             $this->_date = $date;
     }
@@ -126,6 +154,18 @@ class Video{
     }
     public function userPic(){
         return $this->_userpicture;
+    }
+    public function likeCount(){
+        return $this->_likecount;
+    }
+    public function dislikeCount(){
+        return $this->_dislikecount;
+    }
+    public function vueCount(){
+        return $this->_vuecount;
+    }
+    public function abonneCount(){
+        return $this->_abonnecount;
     }
     public function date(){
         return $this->_date;
